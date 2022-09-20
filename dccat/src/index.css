@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Tile{
+  width: 100px;
+  height: 100px;
+  background-color: #000;
+  float: left;
+  color: aliceblue;
+  border: solid 1px #fff;
+  flex: 1 0 25%;
+}
+
+.Grid{
+  width: 30%;
+  height: 100%;
+  background-color: #000;
+  margin: 100px;
+  float: left;
+  color: aliceblue;
+  display: flex;
+  flex-wrap: wrap;
+}
