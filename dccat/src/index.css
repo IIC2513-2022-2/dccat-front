@@ -26,9 +26,24 @@ code {
   width: 30%;
   height: 100%;
   background-color: #000;
-  margin: 100px;
+  margin: 20px;
   float: left;
   color: aliceblue;
   display: flex;
   flex-wrap: wrap;
+}
+
+.Button {
+  background-color: white; 
+  color: black; 
+  border: 2px solid  #008CBA;
+  border-radius: 5px;
+  padding: 10%;
+  font-size: 16px;
+  margin-bottom: 50%;
+}
+
+.Button:hover {
+  background-color: #008CBA;
+  color: white;
 }
