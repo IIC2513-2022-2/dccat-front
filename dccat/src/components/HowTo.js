@@ -1,12 +1,12 @@
-import BlueButton from "./BlueButton"
+import BlueButton from "./BlueButton";
 
-function HowTo(){
-    return (
-        <div>
-            <h1>¿Cómo jugar DCCat?</h1>
-            <BlueButton title={"Volver al juego"} link={"/"}/>
-        </div>
-    )
+function HowTo() {
+  return (
+    <div>
+      <h1>¿Cómo jugar DCCat?</h1>
+      <BlueButton title={"Volver al juego"} link={"/"} />
+    </div>
+  );
 }
 
-export default HowTo
+export default HowTo;
