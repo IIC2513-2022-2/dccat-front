@@ -3,8 +3,8 @@ import Tile from "./Tile";
 function Grid(props) {
   return (
     <div className="Grid">
-      {props.list_symbols.map((symbol, index) => (
-        <Tile key={index} symbol={symbol} />
+      {props.listSymbols.map((symbol, index) => (
+        <Tile id={`tile-${index}`} key={index} symbol={symbol} />
       ))}
     </div>
   );
