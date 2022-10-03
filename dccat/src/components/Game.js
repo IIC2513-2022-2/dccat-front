@@ -26,15 +26,6 @@ function Game() {
         tiles[index].firstElementChild.innerText = "O"
         return 0;
       });
-      
-      alert(
-        `${JSON.stringify({
-          "mi turno?": response.data.current === playerId ? "Si" : "No",
-          "❎": response.data[0],
-          "🅾️": response.data[1],
-          "Gato🐱": grid,
-        })}`
-      );
     });
   };
 
