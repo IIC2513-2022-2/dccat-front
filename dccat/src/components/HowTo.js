@@ -1,4 +1,5 @@
 import BlueButton from "./BlueButton";
+import React from 'react';
 
 function HowTo() {
   return (

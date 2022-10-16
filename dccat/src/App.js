@@ -1,14 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 import Routing from './Routing';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-          <Routing></Routing>
-      </header>
-    </div>
+      <div className="App"> 
+        <header className="App-header">
+          <Routing/>
+        </header>
+      </div>
   );
 }
 

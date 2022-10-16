@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Tile(props) {
   return (
     <section className="Tile">

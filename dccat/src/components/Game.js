@@ -1,6 +1,9 @@
 import BlueButton from "./BlueButton";
 import Grid from "./Grid";
+import React, { useEffect } from 'react';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import useCookieAuth from '../hooks/useCookieAuth';
 
 export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -8,12 +11,20 @@ function Game() {
   const grid = ["", "", "", "", "", "", "", "", ""];
   const playerId = 0;
   const matchId = 0;
+  const navigate = useNavigate();
+  const { currentUser, handleUserLogout } = useCookieAuth(); 
+  
+  const logout = async () => {
+    await axios.get(`${SERVER_URL}/auth/logout`, { withCredentials: true })
+            .then(() => console.log('cerramos sesión'))
+            .catch(err => console.log(err));
+    handleUserLogout();
+  }
 
   const getGrid = async () => {
     const tiles = document.getElementsByClassName("Tile")
-    
     const url = `${SERVER_URL}/matches/${matchId}/players/${playerId}`;
-    await axios.get(url).then((response) => {
+    await axios.get(url, { withCredentials: true }).then((response) => {
       response.data["0"].map((mov) => {
         const index = mov[0] * 3 + mov[1];
         grid[index] = "X";
@@ -39,7 +50,7 @@ function Game() {
       match_id: matchId,
     };
     await axios
-      .post(url, body)
+      .post(url, body, {withCredentials: true})
       .then((response) => {
         alert(` JUGADA CONCRETADA EN (${body.x}, ${body.y})`);
         tiles[body.x * 3 + body.y].firstElementChild.innerText = "X"
@@ -53,8 +64,21 @@ function Game() {
     <>
       <Grid listSymbols={grid} />
       <BlueButton title={"¿Cómo jugar?"} link={"/como-jugar"} />
-      <BlueButton title={"Cargar Tablero"} onClick={getGrid} />
-      <BlueButton title={"Nueva jugada"} onClick={newPlay} />
+      
+      {
+        (currentUser) ? (
+          <>
+            <BlueButton title={"Cargar Tablero"} onClick={getGrid} />
+            <BlueButton title={"Nueva jugada"} onClick={newPlay} />
+            <BlueButton title={"Cerrar sesión"} onClick={logout} />
+          </>
+        ) : (
+          <BlueButton title={"Regístrate"} link={"/signup"} />
+        )
+      }
+      
+      
+      
     </>
   );
 }

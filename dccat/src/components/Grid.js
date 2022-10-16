@@ -1,4 +1,5 @@
 import Tile from "./Tile";
+import React from 'react';
 
 function Grid(props) {
   return (
