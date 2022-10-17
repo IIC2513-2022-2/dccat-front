@@ -8,7 +8,7 @@ export default function Login() {
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const { currentUser, handleUserLogin } = useCookieAuth(); 
+    const { handleUserLogin } = useCookieAuth(); 
 
     const userValidation = async (e) => {
         e.preventDefault();
