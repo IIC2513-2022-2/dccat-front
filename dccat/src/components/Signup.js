@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useCookieAuth from '../hooks/useCookieAuth';
-
-export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from '../App';
 
 export default function Login() {
     const [mail, setMail] = useState("");
@@ -16,7 +15,7 @@ export default function Login() {
         const response = await axios.post(`${SERVER_URL}/auth/login`, {
             "email": mail,
             "password": password
-        },  { withCredentials: true });
+        });
         if (!response.data.error) {
             handleUserLogin();
             navigate("/");

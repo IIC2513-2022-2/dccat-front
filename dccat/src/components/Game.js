@@ -4,8 +4,7 @@ import React, { useEffect } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useCookieAuth from '../hooks/useCookieAuth';
-
-export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { SERVER_URL } from '../App';
 
 function Game() {
   const grid = ["", "", "", "", "", "", "", "", ""];
@@ -15,7 +14,7 @@ function Game() {
   const { currentUser, handleUserLogout } = useCookieAuth(); 
   
   const logout = async () => {
-    await axios.get(`${SERVER_URL}/auth/logout`, { withCredentials: true })
+    await axios.get(`${SERVER_URL}/auth/logout`)
             .then(() => console.log('cerramos sesión'))
             .catch(err => console.log(err));
     handleUserLogout();
@@ -24,7 +23,7 @@ function Game() {
   const getGrid = async () => {
     const tiles = document.getElementsByClassName("Tile")
     const url = `${SERVER_URL}/matches/${matchId}/players/${playerId}`;
-    await axios.get(url, { withCredentials: true }).then((response) => {
+    await axios.get(url).then((response) => {
       response.data["0"].map((mov) => {
         const index = mov[0] * 3 + mov[1];
         grid[index] = "X";
@@ -50,7 +49,7 @@ function Game() {
       match_id: matchId,
     };
     await axios
-      .post(url, body, {withCredentials: true})
+      .post(url, body)
       .then((response) => {
         alert(` JUGADA CONCRETADA EN (${body.x}, ${body.y})`);
         tiles[body.x * 3 + body.y].firstElementChild.innerText = "X"
