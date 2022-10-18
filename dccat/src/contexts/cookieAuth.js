@@ -1,8 +1,6 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useState, useEffect, useMemo } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
 
-export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 export const cookieAuth = createContext();
 
 const CookieAuthProvider = ({ children }) => {
@@ -20,6 +18,10 @@ const CookieAuthProvider = ({ children }) => {
         Cookies.remove("koa.sess");
         Cookies.remove("koa.sess.sig");
     };
+
+    useEffect(() => {
+        handleUserLogin()}, [currentUser, handleUserLogin, handleUserLogout],
+    );
 
     const userStatus = useMemo(
         () => ({ currentUser, handleUserLogin, handleUserLogout }),

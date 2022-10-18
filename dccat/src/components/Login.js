@@ -3,12 +3,15 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useCookieAuth from '../hooks/useCookieAuth';
 import { SERVER_URL } from '../App';
+import jwtDecode from 'jwt-decode';
+import useTokenAuth from '../hooks/useTokenAuth';
 
 export default function Login() {
     const [mail, setMail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const { handleUserLogin } = useCookieAuth(); 
+    const { handleTokenChange } = useTokenAuth(); 
 
     const userValidation = async (e) => {
         e.preventDefault();
@@ -17,8 +20,9 @@ export default function Login() {
             "password": password
         });
         if (!response.data.error) {
+            handleTokenChange(response.data['token'], 'login');
             handleUserLogin();
-            navigate("/");
+            navigate(-1);
 
         } else {
             console.log(response.data.error);  

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useCookieAuth from '../hooks/useCookieAuth';
 import { SERVER_URL } from '../App';
+import useTokenAuth from "../hooks/useTokenAuth";
 
 function Game() {
   const grid = ["", "", "", "", "", "", "", "", ""];
@@ -12,12 +13,14 @@ function Game() {
   const matchId = 0;
   const navigate = useNavigate();
   const { currentUser, handleUserLogout } = useCookieAuth(); 
+  const { handleTokenChange } = useTokenAuth();
   
   const logout = async () => {
-    await axios.get(`${SERVER_URL}/auth/logout`)
+    const response = await axios.get(`${SERVER_URL}/auth/logout`)
             .then(() => console.log('cerramos sesión'))
             .catch(err => console.log(err));
     handleUserLogout();
+    handleTokenChange('', 'logout');
   }
 
   const getGrid = async () => {
@@ -70,9 +73,10 @@ function Game() {
             <BlueButton title={"Cargar Tablero"} onClick={getGrid} />
             <BlueButton title={"Nueva jugada"} onClick={newPlay} />
             <BlueButton title={"Cerrar sesión"} onClick={logout} />
+            <BlueButton title={"Borrar partidas"} link={'/borrar-partidas/'} />
           </>
         ) : (
-          <BlueButton title={"Regístrate"} link={"/signup"} />
+          <BlueButton title={"Iniciar sesión"} link={"/iniciar-sesion"} />
         )
       }
       
