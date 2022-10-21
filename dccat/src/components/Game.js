@@ -1,17 +1,30 @@
 import BlueButton from "./BlueButton";
 import Grid from "./Grid";
+import React, { useEffect } from 'react';
 import axios from "axios";
-
-export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import { useNavigate } from "react-router-dom";
+import useCookieAuth from '../hooks/useCookieAuth';
+import { SERVER_URL } from '../App';
+import useTokenAuth from "../hooks/useTokenAuth";
 
 function Game() {
   const grid = ["", "", "", "", "", "", "", "", ""];
   const playerId = 0;
   const matchId = 0;
+  const navigate = useNavigate();
+  const { currentUser, handleUserLogout } = useCookieAuth(); 
+  const { handleTokenChange } = useTokenAuth();
+  
+  const logout = async () => {
+    const response = await axios.post(`${SERVER_URL}/auth/logout`)
+            .then(() => console.log('cerramos sesión'))
+            .catch(err => console.log(err));
+    handleUserLogout();
+    handleTokenChange('', 'logout');
+  }
 
   const getGrid = async () => {
     const tiles = document.getElementsByClassName("Tile")
-    
     const url = `${SERVER_URL}/matches/${matchId}/players/${playerId}`;
     await axios.get(url).then((response) => {
       response.data["0"].map((mov) => {
@@ -53,8 +66,22 @@ function Game() {
     <>
       <Grid listSymbols={grid} />
       <BlueButton title={"¿Cómo jugar?"} link={"/como-jugar"} />
-      <BlueButton title={"Cargar Tablero"} onClick={getGrid} />
-      <BlueButton title={"Nueva jugada"} onClick={newPlay} />
+      
+      {
+        (currentUser) ? (
+          <>
+            <BlueButton title={"Cargar Tablero"} onClick={getGrid} />
+            <BlueButton title={"Nueva jugada"} onClick={newPlay} />
+            <BlueButton title={"Cerrar sesión"} onClick={logout} />
+            <BlueButton title={"Borrar partidas"} link={'/borrar-partidas/'} />
+          </>
+        ) : (
+          <BlueButton title={"Iniciar sesión"} link={"/iniciar-sesion"} />
+        )
+      }
+      
+      
+      
     </>
   );
 }

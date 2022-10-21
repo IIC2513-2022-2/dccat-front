@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Tile(props) {
   const [selected, setSelected] = useState(false);

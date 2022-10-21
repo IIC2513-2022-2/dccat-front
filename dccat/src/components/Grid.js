@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Tile from "./Tile";
+import React from 'react';
 
 export const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
