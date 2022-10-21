@@ -16,7 +16,7 @@ function Game() {
   const { handleTokenChange } = useTokenAuth();
   
   const logout = async () => {
-    const response = await axios.get(`${SERVER_URL}/auth/logout`)
+    const response = await axios.post(`${SERVER_URL}/auth/logout`)
             .then(() => console.log('cerramos sesión'))
             .catch(err => console.log(err));
     handleUserLogout();
